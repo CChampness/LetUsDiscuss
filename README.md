@@ -1,2 +1,0 @@
-# LetUsDiscuss
-Social media site
