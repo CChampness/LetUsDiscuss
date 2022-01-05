@@ -1,9 +1,9 @@
 const { User, Thought } = require('../models');
 
-// Aggregate function to get the number of users overall
-const headCount = async () =>
+// Aggregate function to get the count of all users
+const userCount = async () =>
   User.aggregate()
-    .count('userCount')
+    .count('numUsers')
     .then((numberOfUsers) => numberOfUsers);
 
 // // Aggregate function for getting the overall grade using $avg
@@ -24,7 +24,7 @@ module.exports = {
       .then(async (users) => {
         const userObj = {
           users,
-          headCount: await headCount(),
+          userCount: await userCount(),
         };
         return res.json(userObj);
       })
@@ -33,6 +33,7 @@ module.exports = {
         return res.status(500).json(err);
       });
   },
+
   // Get a single user
   getSingleUser(req, res) {
     User.findOne({ _id: req.params.userId })
@@ -42,7 +43,7 @@ module.exports = {
           ? res.status(404).json({ message: 'No user with that ID' })
           : res.json({
               user,
-              grade: await grade(req.params.userId),
+              // email: await email(req.params.userId),
             })
       )
       .catch((err) => {
@@ -50,12 +51,35 @@ module.exports = {
         return res.status(500).json(err);
       });
   },
+
+  // update an existing user
+  updateUser(req, res) {
+    console.log("req.params", req.params);
+    console.log("req.body", req.body);
+    User.findByIdAndUpdate(
+      { _id: req.params.userId },
+      { $set: req.body },
+      { runValidators: true, new: true }
+    )
+      .then((user) =>
+        !user
+          ? res.status(404).json({ message: 'No user with this id!' })
+          : res.json(user)
+      )
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json(err);
+      });
+  },
+
   // create a new user
   createUser(req, res) {
+    console.log("createUser, req.body", req.body);
     User.create(req.body)
       .then((user) => res.json(user))
       .catch((err) => res.status(500).json(err));
   },
+
   // Delete a user and remove them from the thought
   deleteUser(req, res) {
     User.findOneAndRemove({ _id: req.params.userId })

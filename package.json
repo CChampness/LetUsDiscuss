@@ -5,7 +5,9 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "node index"
+    "start": "node index",
+    "dev": "nodemon index",
+    "seed": "node utils/seed"
   },
   "dependencies": {
     "express": "^4.17.1",
