@@ -69,6 +69,11 @@ module.exports = {
   },
 
   // Delete a user and remove them from the thought
+  ////////////////////////////////////////////////////////////////////////
+  /////////// TEST THIS WITH MULTIPLE THOUGHTS ///////////////////////////
+  /////////// TEST THIS WITH MULTIPLE THOUGHTS ///////////////////////////
+  /////////// TEST THIS WITH MULTIPLE THOUGHTS ///////////////////////////
+  ////////////////////////////////////////////////////////////////////////
   deleteUser(req, res) {
     console.log("delete user, req.params", req.params);
     console.log("delete user, req.body", req.body);
@@ -84,6 +89,7 @@ module.exports = {
           ? res.status(404).json({
               message: 'User deleted, but no thoughts found',
             })
+            // THIS IS WORKING, DON'T MESS WITH IT!
           : res.json({ message: 'User and thoughts successfully deleted' })
       )
       .catch((err) => {

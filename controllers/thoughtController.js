@@ -20,15 +20,23 @@ module.exports = {
   },
   // Create a thought
   createThought(req, res) {
-    console.log("create thought,", req.params);
-    console.log("create thought,", req.body);
-
-      //Don't just return the thought, Update user with the thought
-      Thought.create(req.body)
-      .then((thought) => res.json(thought))
+    Thought.create(req.body)
+      .then((thought) => {
+        return User.findOneAndUpdate(
+          { username: req.body.username },
+          { $push: { thoughts: thought._id } },
+          { new: true }
+        );
+      })
+      .then((user) =>
+        !user
+          ? res
+              .status(404)
+              .json({ message: 'thought created, but no users with this name' })
+          : res.json({ message: 'thought created for user' })
+      )
       .catch((err) => {
-        console.log(err);
-        return res.status(500).json(err);
+        console.error(err);
       });
   },
   // Delete a thought
