@@ -1,5 +1,5 @@
 const connection = require('../config/connection');
-const { User } = require('../models');
+const { User, Thought} = require('../models');
 
 connection.on('error', (err) => err);
 
@@ -13,7 +13,7 @@ connection.once('open', async () => {
   const users = [
     {
       username: "Hank",
-      email: "hank@mail.com"
+      email: "hank@mail.com",
     },
     {
       username: "Jake",
@@ -25,8 +25,20 @@ connection.once('open', async () => {
     },
   ];
 
+  // const thoughts = [
+  //   {
+  //     username: "Hank",
+  //     thoughtText: "Let's get going!",
+  //   },
+  //   {
+  //     username: "Hank",
+  //     thoughtText: "OK, now we're talking.",
+  //   },
+  // ];
+
   // Add users to the collection and await the results
   await User.collection.insertMany(users);
+  // await Thought.collection.insertMany(thoughts);
 
   // Log out the seed data to indicate what should appear in the database
   console.table(users);

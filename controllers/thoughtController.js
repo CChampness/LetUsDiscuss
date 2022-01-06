@@ -22,7 +22,9 @@ module.exports = {
   createThought(req, res) {
     console.log("create thought,", req.params);
     console.log("create thought,", req.body);
-    Thought.create(req.body)
+
+      //Don't just return the thought, Update user with the thought
+      Thought.create(req.body)
       .then((thought) => res.json(thought))
       .catch((err) => {
         console.log(err);
@@ -37,7 +39,7 @@ module.exports = {
           ? res.status(404).json({ message: 'No thought with that ID' })
           : User.deleteMany({ _id: { $in: thought.users } })
       )
-      .then(() => res.json({ message: 'Thought and users deleted!' }))
+      .then(() => res.json({ message: 'Thought deleted!' }))
       .catch((err) => res.status(500).json(err));
   },
   // Update a thought
