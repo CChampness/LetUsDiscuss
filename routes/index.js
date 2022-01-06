@@ -3,6 +3,6 @@ const apiRoutes = require('./api');
 
 router.use('/api', apiRoutes);
 
-router.use((req, res) => res.send('Wrong route for LetUsDiscuss!'));
+router.use((req, res) => res.status(404).send('Wrong route for LetUsDiscuss!'));
 
 module.exports = router;

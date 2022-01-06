@@ -6,17 +6,6 @@ const userCount = async () =>
     .count('numUsers')
     .then((numberOfUsers) => numberOfUsers);
 
-// // Aggregate function for getting the overall grade using $avg
-// const grade = async (userId) =>
-//   User.aggregate([
-//     {
-//       $unwind: '$reactions',
-//     },
-//     {
-//       $group: { _id: userId, overallGrade: { $avg: '$reactions.score' } },
-//     },
-//   ]);
-
 module.exports = {
   // Get all users
   getUsers(req, res) {
