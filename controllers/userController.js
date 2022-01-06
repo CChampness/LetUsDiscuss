@@ -43,8 +43,8 @@ module.exports = {
 
   // update an existing user
   updateUser(req, res) {
-    console.log("req.params", req.params);
-    console.log("req.body", req.body);
+    console.log("update user, req.params", req.params);
+    console.log("update user, req.body", req.body);
     User.findByIdAndUpdate(
       { _id: req.params.userId },
       { $set: req.body },
@@ -71,6 +71,9 @@ module.exports = {
 
   // Delete a user and remove them from the thought
   deleteUser(req, res) {
+    console.log("delete user, req.params", req.params);
+    console.log("delete user, req.body", req.body);
+    
     User.findOneAndRemove({ _id: req.params.userId })
       .then((user) =>
         !user
@@ -97,6 +100,7 @@ module.exports = {
   // Add a reaction to a user
   addReaction(req, res) {
     console.log('You are adding a reaction');
+    console.log(req.params);
     console.log(req.body);
     User.findOneAndUpdate(
       { _id: req.params.userId },
@@ -114,6 +118,7 @@ module.exports = {
   },
   // Remove reaction from a user
   removeReaction(req, res) {
+    console.log("remove reaction,",req.params);
     User.findOneAndUpdate(
       { _id: req.params.userId },
       { $pull: { reaction: { reactionId: req.params.reactionId } } },

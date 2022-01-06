@@ -20,6 +20,8 @@ module.exports = {
   },
   // Create a thought
   createThought(req, res) {
+    console.log("create thought,", req.params);
+    console.log("create thought,", req.body);
     Thought.create(req.body)
       .then((thought) => res.json(thought))
       .catch((err) => {
@@ -40,6 +42,8 @@ module.exports = {
   },
   // Update a thought
   updateThought(req, res) {
+    console.log("update thought,", req.params);
+    console.log("update thought,", req.body);
     Thought.findOneAndUpdate(
       { _id: req.params.thoughtId },
       { $set: req.body },
