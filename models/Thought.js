@@ -1,5 +1,33 @@
 const { Schema, model } = require('mongoose');
 
+const reactionSchema = new Schema(
+  {
+    reactionId: {
+      type: Schema.Types.ObjectId,
+      // Default value is set to a new ObjectId
+      // Has to be generated using method => new thing like this Schema.Types.ObjectId
+    },
+    reactionBody: {
+      type: String,
+      required: true,
+      max_length: 280,
+    },
+    username: {
+      type: String,
+      required: true,
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
+  },
+  {
+    toJSON: {
+      getters: true,
+    },
+  } 
+);
+
 // Schema to create a thought model
 const thoughtSchema = new Schema(
   {
@@ -18,12 +46,7 @@ const thoughtSchema = new Schema(
       type: String,
       required: true,
     },
-    reactions: [
-      {
-        type: Schema.Types.ObjectId, 
-        ref: "Reaction"
-      }
-    ],
+    reactions: [reactionSchema],
   },
   {
     toJSON: {
