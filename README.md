@@ -16,4 +16,22 @@ can share their thoughts, react to friends’ thoughts, and create a friend list
 * Using Insomnia, when you test API POST and DELETE routes, you are able to successfully create and delete
   reactions to thoughts, and also add and remove friends to and from the user’s friend list
 ```
+## Functionality
+```
+* Create a user
+* Find user by ID
+* Update user
+* Find all users
+* Delete a user - user's thoughts are automatically deleted
+* Create thought - optionally assigned to user when the
+  thought is created
+* Find a single thought by ID
+* Find all thoughts
+* Delete a thought
+* Add a friend to a user
+* Add two or more friends to a user at the same time
+* Remove a friend from a user
+* Create a reaction to a thought
+* Delete a reaction
+```
 

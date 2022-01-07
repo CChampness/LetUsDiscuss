@@ -68,7 +68,7 @@ module.exports = {
       .catch((err) => res.status(500).json(err));
   },
 
-  // Delete a user and remove them from the thought
+  // Delete a user and remove their thoughts
   ////////////////////////////////////////////////////////////////////////
   /////////// TEST THIS WITH MULTIPLE THOUGHTS ///////////////////////////
   /////////// TEST THIS WITH MULTIPLE THOUGHTS ///////////////////////////
@@ -96,6 +96,59 @@ module.exports = {
         console.log(err);
         res.status(500).json(err);
       });
+  },
+
+  // Add a friend or friends to a user by id in body
+  // For one friend..."friends": "61d86363a091af72adca9267"
+  // For two friends..."friends": ["61d86363a091af72adca9267", "61d86363a091af72adca9265"]
+  makeFriend(req, res) {
+    console.log('You are making a new friend:', req.body.friends);
+    console.log(req.params);
+    console.log(req.body);
+    User.findOneAndUpdate(
+
+      // { username: req.body.username },
+      // { $push: { thoughts: thought._id } },
+      // { new: true }
+
+      // { _id: req.params.userId },
+      // { $addToSet: { friends: req.body } },
+      // { runValidators: true, new: true }
+
+      { _id: req.params.userId },
+      { $addToSet: { friends: req.body.friends } },
+      { runValidators: true, new: true }
+      
+      )
+      .then((user) =>
+        !user
+          ? res
+              .status(404)
+              .json({ message: 'No user found with that ID :(' })
+          : res.json(user)
+      )
+      .catch((err) => res.status(500).json(err));
+  },
+
+  // Remove a friend (user) from a user by ID
+  abandonFriend(req, res) {
+    console.log('You are abandoning a friend:', req.body.friends);
+    console.log(req.params);
+    console.log(req.body);
+    User.findOneAndUpdate(
+      { _id: req.params.userId },
+      { $pull: { friends: req.body.friends } },
+      { runValidators: true, new: true }
+      
+      )
+      .then((user) =>
+        !user
+          ? res
+              .status(404)
+              .json({ message: 'No user found with that ID :(' })
+          : res.json(user)
+      )
+      .catch((err) => res.status(500).json(err));
   },
 
   // Add a reaction to a user
