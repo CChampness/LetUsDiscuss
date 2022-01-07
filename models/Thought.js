@@ -4,13 +4,12 @@ const reactionSchema = new Schema(
   {
     reactionId: {
       type: Schema.Types.ObjectId,
-      // Default value is set to a new ObjectId
-      // Has to be generated using method => new thing like this Schema.Types.ObjectId
+      // default: () => new Schema.Types.ObjectId(),
     },
     reactionBody: {
       type: String,
       required: true,
-      max_length: 280,
+      maxlength: 280,
     },
     username: {
       type: String,

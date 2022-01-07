@@ -66,4 +66,48 @@ module.exports = {
       )
       .catch((err) => res.status(500).json(err));
   },
+  
+  addReaction(req, res) {
+    console.log('You are adding a reaction to ',req.params);
+    console.log(req.params);
+    console.log(req.body);
+    Thought.findOneAndUpdate(
+      { _id: req.params.thoughtId },
+      { $push: {reactions: req.body } },
+      { runValidators: true, new: true }
+    )
+      .then((thought) =>
+        !thought
+          ? res.status(404).json({ message: 'No thought with this id!' })
+          : res.json(thought)
+      )
+      .catch((err) => res.status(500).json(err));
+  },
+
+  // Remove reaction from a thought
+  removeReaction(req, res) {
+    console.log("remove reaction ", req.body.reactionId, " from " ,req.params);
+    console.log("params:",req.params);
+    console.log("body:",req.body);
+    Thought.findOneAndUpdate(
+      { _id: req.params.thoughtId },
+      { $pull: { reactions: { _id: req.body.reactionId } } },
+      { runValidators: true, new: true }
+    )
+      .then((thought) =>
+        !thought
+          ? res
+              .status(404)
+              .json({ message: 'No thought found with that ID :(' })
+          : res.json(thought)
+      )
+      .catch((err) => res.status(500).json(err));
+  },
+
+  removeReactionByParam(req, res) {
+    console.log("remove reaction by param", req.body.reactionId, " from " ,req.params);
+    console.log("params:",req.params);
+    console.log("body:",req.body);
+  },
+
 };

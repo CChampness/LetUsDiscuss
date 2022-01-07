@@ -106,20 +106,10 @@ module.exports = {
     console.log(req.params);
     console.log(req.body);
     User.findOneAndUpdate(
-
-      // { username: req.body.username },
-      // { $push: { thoughts: thought._id } },
-      // { new: true }
-
-      // { _id: req.params.userId },
-      // { $addToSet: { friends: req.body } },
-      // { runValidators: true, new: true }
-
       { _id: req.params.userId },
       { $addToSet: { friends: req.body.friends } },
       { runValidators: true, new: true }
-      
-      )
+    )
       .then((user) =>
         !user
           ? res
@@ -138,44 +128,6 @@ module.exports = {
     User.findOneAndUpdate(
       { _id: req.params.userId },
       { $pull: { friends: req.body.friends } },
-      { runValidators: true, new: true }
-      
-      )
-      .then((user) =>
-        !user
-          ? res
-              .status(404)
-              .json({ message: 'No user found with that ID :(' })
-          : res.json(user)
-      )
-      .catch((err) => res.status(500).json(err));
-  },
-
-  // Add a reaction to a user
-  addReaction(req, res) {
-    console.log('You are adding a reaction');
-    console.log(req.params);
-    console.log(req.body);
-    User.findOneAndUpdate(
-      { _id: req.params.userId },
-      { $addToSet: { reactions: req.body } },
-      { runValidators: true, new: true }
-    )
-      .then((user) =>
-        !user
-          ? res
-              .status(404)
-              .json({ message: 'No user found with that ID :(' })
-          : res.json(user)
-      )
-      .catch((err) => res.status(500).json(err));
-  },
-  // Remove reaction from a user
-  removeReaction(req, res) {
-    console.log("remove reaction,",req.params);
-    User.findOneAndUpdate(
-      { _id: req.params.userId },
-      { $pull: { reaction: { reactionId: req.params.reactionId } } },
       { runValidators: true, new: true }
     )
       .then((user) =>
