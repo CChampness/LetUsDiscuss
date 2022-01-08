@@ -27,6 +27,13 @@ const reactionSchema = new Schema(
   } 
 );
 
+reactionSchema.virtual("formattedDate").get(function() {
+  return this.createdAt.toLocaleString('en-US');
+  // getUTCMilliseconds();
+  // toLocaleDateString('en-US')
+});
+
+
 // Schema to create a thought model
 const thoughtSchema = new Schema(
   {
