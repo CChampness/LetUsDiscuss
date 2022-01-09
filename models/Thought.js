@@ -4,35 +4,33 @@ const reactionSchema = new Schema(
   {
     reactionId: {
       type: Schema.Types.ObjectId,
-      // default: () => new Schema.Types.ObjectId(),
+      // default: () => new Types.ObjectId()
     },
     reactionBody: {
       type: String,
       required: true,
-      maxlength: 280,
+      maxlength: 280
     },
     username: {
       type: String,
-      required: true,
+      required: true
     },
     createdAt: {
       type: Date,
-      default: Date.now,
+      default: Date.now //toLocaleString('en-US')
     },
   },
   {
     toJSON: {
-      getters: true,
+      getters: true
     },
+    id: false
   } 
 );
 
 reactionSchema.virtual("formattedDate").get(function() {
   return this.createdAt.toLocaleString('en-US');
-  // getUTCMilliseconds();
-  // toLocaleDateString('en-US')
 });
-
 
 // Schema to create a thought model
 const thoughtSchema = new Schema(
@@ -41,30 +39,33 @@ const thoughtSchema = new Schema(
       type: String,
       required: true,
       min_length: 1,
-      max_length: 280,
+      max_length: 280
     },
     createdAt: {
       type: Date,
-      default: Date.now(),
+      default: Date.now()
       // need getter to format
     },
     username: {
       type: String,
-      required: true,
+      required: true
     },
-    reactions: [reactionSchema],
+    reactions: [reactionSchema]
   },
   {
     toJSON: {
       virtuals: true,
-      getters: true,
+      getters: true
     },
-    id: false,
+    id: false
   }
 );
 
-// Create a virtual called `reactionCount` that retrieves
-//  the length of the thought's `reactions` array field on query.
+thoughtSchema.virtual("formattedDate").get(function() {
+  return this.createdAt.toLocaleString('en-US');
+});
+
+// Retrieves the length of the thought's `reactions` array
 thoughtSchema.virtual("reactionCount").get(function() {
   return this.reactions.length;
 });

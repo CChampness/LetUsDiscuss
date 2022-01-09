@@ -18,13 +18,15 @@ router.route('/:userId')
   .put(updateUser)
   .delete(deleteUser);
 
-// /api/users/:userId/friends
-router.route('/:userId/friends').post(makeFriend);
+// // /api/users/:userId/friends
+// router.route('/:userId/friends').post(makeFriend);
 
-// /api/users/:userId/friends
-router.route('/:userId/friends').delete(abandonFriend);
+// // /api/users/:userId/friends
+// router.route('/:userId/friends').delete(abandonFriend);
 
 // // /api/users/:userId/friends/:userId
-// router.route('/:userId/friends/:userId').delete(abandonFriend);
+router.route('/:userId/friends/:friendId')
+.post(makeFriend)
+.delete(abandonFriend);
 
 module.exports = router;

@@ -8,35 +8,36 @@ const userSchema = new Schema(
       type: String,
       unique: true,
       required: true,
-      trimmed: true,
+      trimmed: true
     },
     email: {
       type: String,
       required: true,
       unique: true,
       // Use Mongoose match to validate
+      match: /.+\@.+\..+/
     },
     meta: {
       thoughtcount: Number,
-      friendcount: Number,
+      friendcount: Number
     },
     thoughts: [
       {
         type: Schema.Types.ObjectId,
-        ref: 'Thought',
+        ref: 'Thought'
       },
     ],
     friends: [
       {
         type: Schema.Types.ObjectId,
-        ref: 'User',
+        ref: 'User'
       },
     ],
   },
   // Need virtual friendCount
   {
     toJSON: {
-      virtuals: true,
+      virtuals: true
     },
   }
 );

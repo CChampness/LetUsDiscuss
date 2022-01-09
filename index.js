@@ -7,10 +7,8 @@ const cwd = process.cwd();
 const PORT = process.env.PORT || 3001;
 const app = express();
 
-// Note: not necessary for the Express server to function. This just helps indicate what activity's server is running in the terminal.
-const activity = cwd.includes('LetUsDiscuss')
-  ? cwd.split('/LetUsDiscuss/')[1]
-  : cwd;
+// Indicate what server is running.
+const activity = 'LetUsDiscuss';
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());

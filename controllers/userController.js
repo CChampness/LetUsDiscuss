@@ -98,16 +98,11 @@ module.exports = {
       });
   },
 
-  // Add a friend or friends to a user by id in body
-  // For one friend..."friends": "61d86363a091af72adca9267"
-  // For two friends..."friends": ["61d86363a091af72adca9267", "61d86363a091af72adca9265"]
   makeFriend(req, res) {
-    console.log('You are making a new friend:', req.body.friends);
-    console.log(req.params);
-    console.log(req.body);
+    console.log('You are making a new friend:', req.params);
     User.findOneAndUpdate(
       { _id: req.params.userId },
-      { $addToSet: { friends: req.body.friends } },
+      { $addToSet: { friends: req.params.friendId } },
       { runValidators: true, new: true }
     )
       .then((user) =>
@@ -122,12 +117,10 @@ module.exports = {
 
   // Remove a friend (user) from a user by ID
   abandonFriend(req, res) {
-    console.log('You are abandoning a friend:', req.body.friends);
-    console.log(req.params);
-    console.log(req.body);
+    console.log('You are abandoning a friend:', req.params);
     User.findOneAndUpdate(
       { _id: req.params.userId },
-      { $pull: { friends: req.body.friends } },
+      { $pull: { friends: req.params.friendId } },
       { runValidators: true, new: true }
     )
       .then((user) =>
@@ -139,4 +132,46 @@ module.exports = {
       )
       .catch((err) => res.status(500).json(err));
   },
+
+  // // Add a friend or friends to a user by id in body
+  // // For one friend..."friends": "61d86363a091af72adca9267"
+  // // For two friends..."friends": ["61d86363a091af72adca9267", "61d86363a091af72adca9265"]
+  // makeFriend(req, res) {
+  //   console.log('You are making a new friend:', req.body.friends);
+  //   console.log(req.params);
+  //   console.log(req.body);
+  //   User.findOneAndUpdate(
+  //     { _id: req.params.userId },
+  //     { $addToSet: { friends: req.body.friends } },
+  //     { runValidators: true, new: true }
+  //   )
+  //     .then((user) =>
+  //       !user
+  //         ? res
+  //             .status(404)
+  //             .json({ message: 'No user found with that ID :(' })
+  //         : res.json(user)
+  //     )
+  //     .catch((err) => res.status(500).json(err));
+  // },
+
+  // // Remove a friend (user) from a user by ID
+  // abandonFriend(req, res) {
+  //   console.log('You are abandoning a friend:', req.body.friends);
+  //   console.log(req.params);
+  //   console.log(req.body);
+  //   User.findOneAndUpdate(
+  //     { _id: req.params.userId },
+  //     { $pull: { friends: req.body.friends } },
+  //     { runValidators: true, new: true }
+  //   )
+  //     .then((user) =>
+  //       !user
+  //         ? res
+  //             .status(404)
+  //             .json({ message: 'No user found with that ID :(' })
+  //         : res.json(user)
+  //     )
+  //     .catch((err) => res.status(500).json(err));
+  // },
 };
