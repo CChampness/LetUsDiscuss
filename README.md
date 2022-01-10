@@ -1,7 +1,6 @@
 # LetUsDiscuss
-Social media site
-
-This app is an API for a social network web application.  It provides the backend for a site where users
+LetUsDiscuss is a backend for a simple Social media site.
+It is an API for a social network web application.  It provides the backend for a site where users
 can share their thoughts, react to friends’ thoughts, and create a friend list. 
 
 ## Features
@@ -29,9 +28,14 @@ can share their thoughts, react to friends’ thoughts, and create a friend list
 * Find all thoughts
 * Delete a thought
 * Add a friend to a user
-* Add two or more friends to a user at the same time
 * Remove a friend from a user
 * Create a reaction to a thought
 * Delete a reaction
 ```
-
+## Running the app
+```
+On the terminal, in the root directory of the app, type:
+        node index
+```
+## Video walkthrough of the app
+https://drive.google.com/drive/folders/117B4tl0AUfzSoM8TQRiTnNuVngdSh3z5

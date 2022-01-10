@@ -6,8 +6,9 @@ connection.on('error', (err) => err);
 connection.once('open', async () => {
   console.log('connected');
 
-  // Drop existing users
+  // Drop existing users and thoughts
   await User.deleteMany({});
+  await Thought.deleteMany({});
 
   // Create empty array to hold the users
   const users = [
@@ -25,20 +26,8 @@ connection.once('open', async () => {
     },
   ];
 
-  // const thoughts = [
-  //   {
-  //     username: "Hank",
-  //     thoughtText: "Let's get going!",
-  //   },
-  //   {
-  //     username: "Hank",
-  //     thoughtText: "OK, now we're talking.",
-  //   },
-  // ];
-
   // Add users to the collection and await the results
   await User.collection.insertMany(users);
-  // await Thought.collection.insertMany(thoughts);
 
   // Log out the seed data to indicate what should appear in the database
   console.table(users);

@@ -3,8 +3,7 @@ const { Schema, model } = require('mongoose');
 const reactionSchema = new Schema(
   {
     reactionId: {
-      type: Schema.Types.ObjectId,
-      // default: () => new Types.ObjectId()
+      type: Schema.Types.ObjectId
     },
     reactionBody: {
       type: String,
@@ -15,9 +14,9 @@ const reactionSchema = new Schema(
       type: String,
       required: true
     },
-    createdAt: {
+    iso: {
       type: Date,
-      default: Date.now //toLocaleString('en-US')
+      default: Date.now
     },
   },
   {
@@ -28,8 +27,10 @@ const reactionSchema = new Schema(
   } 
 );
 
-reactionSchema.virtual("formattedDate").get(function() {
-  return this.createdAt.toLocaleString('en-US');
+reactionSchema
+  .virtual("createdAt")
+  .get(function() {
+    return this.iso.toLocaleString('en-US');
 });
 
 // Schema to create a thought model
@@ -41,16 +42,15 @@ const thoughtSchema = new Schema(
       min_length: 1,
       max_length: 280
     },
-    createdAt: {
-      type: Date,
-      default: Date.now()
-      // need getter to format
-    },
     username: {
       type: String,
       required: true
     },
-    reactions: [reactionSchema]
+    reactions: [reactionSchema],
+    iso: {
+      type: Date,
+      default: Date.now()
+    },
   },
   {
     toJSON: {
@@ -61,13 +61,28 @@ const thoughtSchema = new Schema(
   }
 );
 
-thoughtSchema.virtual("formattedDate").get(function() {
-  return this.createdAt.toLocaleString('en-US');
+thoughtSchema
+  .virtual("createdAt")
+  .get(function() {
+    return this.iso.toLocaleString('en-US');
 });
 
 // Retrieves the length of the thought's `reactions` array
-thoughtSchema.virtual("reactionCount").get(function() {
-  return this.reactions.length;
+thoughtSchema
+  .virtual("reactionCount")
+  .get(function() {
+    return this.reactions.length;
+});
+
+// Remove thought from user when it is deleted
+thoughtSchema.pre('remove', function(next) {
+  console.log("removing:",this._id)
+  User.update(
+      { thoughtId : this._id}, 
+      { $pull: { thoughtId: this._id } },
+      { multi: true })
+  .exec();
+  next();
 });
 
 const Thought = model('thought', thoughtSchema);
