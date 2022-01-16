@@ -38,4 +38,4 @@ On the terminal, in the root directory of the app, type:
         node index
 ```
 ## Video walkthrough of the app
-https://drive.google.com/drive/folders/117B4tl0AUfzSoM8TQRiTnNuVngdSh3z5
+https://drive.google.com/file/d/1J21jsKu0tRG0GBiXCJ9mpTVrfwUpToS8/view?usp=sharing
